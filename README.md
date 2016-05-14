@@ -4,6 +4,10 @@ Bluetooth to Philips Hue
 # Installation
 npm install
 
+## Edit index.js:
+set the host variable to THE IP OF YOUR HUE BRIDGE
+set the username to a valid username that is registered with your bridge.
+
 # Run
 node index.js
 
