@@ -16,25 +16,20 @@ var displayResult = function(result) {
     console.log(JSON.stringify(result, null, 2));
 };
  
-// list serial ports:
+// find bluetooth port and set it up
 serialport.list(function (err, ports) {
-  ports.forEach(function(port) {
-    if(port.comName.indexOf("rfcomm")>-1)
-    {
-    console.log("bluetooth port: "+port.comName);
-    portName = port.comName;
-    myPort = new SerialPort(portName, { baudRate: 9600, parser: serialport.parsers.readline("\n")});
-myPort.on('open', showPortOpen);
-myPort.on('data', sendSerialData);
-myPort.on('close', showPortClose);
-myPort.on('error', showError);
-
-    }  
-
-
+    ports.forEach(function(port) {
+        if(port.comName.indexOf("rfcomm")>-1){
+            console.log("bluetooth port: "+port.comName);
+            portName = port.comName;
+            myPort = new SerialPort(portName, { baudRate: 9600, parser: serialport.parsers.readline("\n")});
+            myPort.on('open', showPortOpen);
+            myPort.on('data', sendSerialData);
+            myPort.on('close', showPortClose);
+            myPort.on('error', showError);
+        }  
+    });
 });
-});
-
 
 function showPortOpen() {
    console.log('port open. Data rate: ' + myPort.options.baudRate);
@@ -47,9 +42,9 @@ function sendSerialData(data) {
      LEDon();
    }
    else if(data.indexOf("0")>-1)
-  {
-    LEDoff();
-  }
+   {
+       LEDoff();
+   }
 }
  
 function showPortClose() {
@@ -62,17 +57,12 @@ function showError(error) {
 
 function LEDon()
 {
-state = lightState.create().on().white(500, 100);
-api.setLightState(3, state)
-    .then(displayResult)
-    .done();
+    state = lightState.create().on().white(500, 100);
+    api.setLightState(3, state).then(displayResult).done();
 }
-
 
 function LEDoff()
 {
-state = lightState.create().off();
-api.setLightState(3, state)
-    .then(displayResult)
-    .done();
+    state = lightState.create().off();
+    api.setLightState(3, state).then(displayResult).done();
 }
