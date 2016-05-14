@@ -19,8 +19,10 @@ For getting this running on a Raspberry Pi 3, I downloaded the latest Raspbian J
 
 sudo nano /etc/systemd/system/bluetooth.service
 Edit/Add these lines:
+```
   ExecStart=/usr/lib/bluetooth/bluetoothd -C
   ExecStartPost=/usr/bin/sdptool add SP
+```
 
 Save and Exit nano.
 sudo reboot
@@ -48,7 +50,7 @@ Exit bluetoothctl:
 
 Edit/Create rfcomm.service:
 sudo nano /etc/systemd/system/rfcomm.service
-
+```
   [Unit]
   Description=RFCOMM service
   After=bluetooth.service
@@ -59,6 +61,7 @@ sudo nano /etc/systemd/system/rfcomm.service
  
   [Install]
   WantedBy=multi-user.target
+```
 
 Save and Exit nano.
 
